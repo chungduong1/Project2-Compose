@@ -4,14 +4,14 @@ Docker Compose Setup for Jenkins and Docker-in-Docker (DinD)
 This project utilizes Docker Compose to set up a Jenkins CI/CD server alongside a Docker-in-Docker (DinD) service. This configuration allows for efficient continuous integration and deployment workflows, leveraging Jenkins for automation and Docker for containerized environments.
 
 # Table of Contents
-  Prerequisites
-  Installation
-  Configuration
-  Usage
-  Services
-  Networking
-  Volumes
-  License
+- Prerequisites
+- Installation
+- Configuration
+- Usage
+- Services
+- Networking
+- Volumes
+- License
 
 # Prerequisites
 Docker and Docker Compose installed on your machine.
