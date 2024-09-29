@@ -1,34 +1,39 @@
-version: '3.7'
-services:
-  dind:
-    image: docker:dind
-    user: root
-    privileged: true
-    container_name: dind
-    expose:
-      - 2375
-    networks:
-      - jenkins_dind
-    environment:
-      DOCKER_TLS_CERTDIR: ""
+version: '3.1'
 
+networks:
+  docker:
+
+volumes:
+  jenkins-data:
+  jenkins-docker-certs:
+
+services:
   jenkins:
-    image: jenkins/jenkins:lts
+    image: jenkins/jenkins:lts-jdk11
     user: root
     container_name: jenkins
-    depends_on:
-      - dind
     ports:
-      - 8081:8080
+      - 8080:8080
       - 50000:50000
     volumes:
       - ./jenkins:/var/jenkins_home
       - /usr/bin/docker:/usr/bin/docker
-    environment:
-      DOCKER_HOST: "tcp://dind:2375"
-    networks:
-      - jenkins_dind
+      - /var/run/docker.sock:/var/run/docker.sock
 
-networks:
-  jenkins_dind:
-    driver: bridge
+  dind:
+    image: docker:dind
+    privileged: true
+    restart: always
+    networks:
+      docker:
+        aliases: 
+          - docker
+    ports:
+      - 2376:2376
+    tty: true
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client
+      - $HOME:/home
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
