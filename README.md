@@ -42,15 +42,15 @@ or see in docker logs jenkins / console output
 
 # Services
 ## Jenkins
-[Image: jenkins/jenkins:lts-jdk11]
-[Ports:]
--8080: Jenkins web interface
--50000: Jenkins agent communication
--Volumes:
--./jenkins:/var/jenkins_home: Persists Jenkins data.
--/usr/bin/docker:/usr/bin/docker: Provides access to the Docker binary.
--/var/run/docker.sock:/var/run/docker.sock: Allows Jenkins to communicate with the Docker daemon.
--$HOME:/home: Mounts the home directory.
+- Image: jenkins/jenkins:lts-jdk11
+- Ports:
++ 8080: Jenkins web interface
++ 50000: Jenkins agent communication
+- Volumes:
+- ./jenkins:/var/jenkins_home: Persists Jenkins data.
+- /usr/bin/docker:/usr/bin/docker: Provides access to the Docker binary.
+- /var/run/docker.sock:/var/run/docker.sock: Allows Jenkins to communicate with the Docker daemon.
+- $HOME:/home: Mounts the home directory.
 ## Docker-in-Docker (DinD)
 Image: docker:dind
 Ports:
