@@ -1,7 +1,7 @@
 Docker Compose Setup for Jenkins and Docker-in-Docker (DinD)
 This project utilizes Docker Compose to set up a Jenkins CI/CD server alongside a Docker-in-Docker (DinD) service. This configuration allows for efficient continuous integration and deployment workflows, leveraging Jenkins for automation and Docker for containerized environments.
 
-#Table of Contents
+# Table of Contents
 Prerequisites
 Installation
 Configuration
@@ -10,12 +10,13 @@ Services
 Networking
 Volumes
 License
-Prerequisites
+
+# Prerequisites
 Docker and Docker Compose installed on your machine.
 Basic knowledge of Docker and Jenkins.
 Access to a terminal or command line interface.
 
-#Installation
+# Installation
 1. Clone the repository or create a directory for the Docker Compose setup:
 git clone <repository-url>
 cd <directory>
@@ -24,12 +25,12 @@ cd <directory>
 mkdir jenkins
 3. Place your Docker Compose file (docker-compose.yml) in the directory.
 
-#Configuration
+# Configuration
 The docker-compose.yml file is configured as follows:
 Jenkins runs on the official Jenkins image with the JDK 11 variant.
 Docker-in-Docker (DinD) allows Jenkins to build Docker images and run containers.
 
-#Usage
+# Usage
 To start the services, run the following command in the directory containing the docker-compose.yml file:
 docker compose up
 
@@ -37,8 +38,8 @@ You can access Jenkins at http://localhost:8080. To get the initial admin passwo
 docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 or see in docker logs jenkins / console output 
 
-#Services
-##Jenkins
+# Services
+## Jenkins
 Image: jenkins/jenkins:lts-jdk11
 Ports:
 8080: Jenkins web interface
@@ -48,7 +49,7 @@ Volumes:
 /usr/bin/docker:/usr/bin/docker: Provides access to the Docker binary.
 /var/run/docker.sock:/var/run/docker.sock: Allows Jenkins to communicate with the Docker daemon.
 $HOME:/home: Mounts the home directory.
-##Docker-in-Docker (DinD)
+## Docker-in-Docker (DinD)
 Image: docker:dind
 Ports:
 2376: Exposes Docker daemon for TLS communication.
