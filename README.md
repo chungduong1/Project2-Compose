@@ -44,23 +44,23 @@ or see in docker logs jenkins / console output
 ## Jenkins
 - Image: jenkins/jenkins:lts-jdk11
 - Ports:
-+ 8080: Jenkins web interface
-+ 50000: Jenkins agent communication
+8080: Jenkins web interface
+50000: Jenkins agent communication
 - Volumes:
 - ./jenkins:/var/jenkins_home: Persists Jenkins data.
 - /usr/bin/docker:/usr/bin/docker: Provides access to the Docker binary.
 - /var/run/docker.sock:/var/run/docker.sock: Allows Jenkins to communicate with the Docker daemon.
 - $HOME:/home: Mounts the home directory.
 ## Docker-in-Docker (DinD)
-Image: docker:dind
-Ports:
+- Image: docker:dind
+- Ports:
 2376: Exposes Docker daemon for TLS communication.
-Environment:
-DOCKER_TLS_CERTDIR=/certs: Configures the directory for TLS certificates.
-Volumes:
+- Environment:
+- DOCKER_TLS_CERTDIR=/certs: Configures the directory for TLS certificates.
+- Volumes:
 jenkins-data:/var/jenkins_home: Shares data between Jenkins and DinD.
 jenkins-docker-certs:/certs/client: Stores Docker TLS certificates.
-Networking
+- Networking
 Both Jenkins and DinD services are connected to a user-defined Docker network called docker. This network enables communication between the services.
 
 Volumes
