@@ -1,39 +1,39 @@
-version: '3.1'
+version: '3.7' # version 3.7
 
-networks:
+networks: # create a network called docker
   docker:
 
-volumes:
+volumes: # create two volumes called jenkins-data and jenkins-docker-certs
   jenkins-data:
   jenkins-docker-certs:
 
 services:
-  jenkins:
-    image: jenkins/jenkins:lts-jdk11
-    user: root
-    container_name: jenkins
-    ports:
+  jenkins: # create a service called jenkins
+    image: jenkins/jenkins:lts-jdk11 # use the official Jenkins image
+    user: root # run as root
+    container_name: jenkins # name the container jenkins
+    ports: # expose ports 8080 and 50000
       - 8080:8080
       - 50000:50000
-    volumes:
-      - ./jenkins:/var/jenkins_home
-      - /usr/bin/docker:/usr/bin/docker
-      - /var/run/docker.sock:/var/run/docker.sock
+    volumes: 
+      - ./jenkins:/var/jenkins_home # mount the jenkins directory to /var/jenkins_home
+      - /usr/bin/docker:/usr/bin/docker # mount the docker binary
+      - /var/run/docker.sock:/var/run/docker.sock # mount the docker socket
 
-  dind:
-    image: docker:dind
-    privileged: true
-    restart: always
-    networks:
-      docker:
-        aliases: 
-          - docker
-    ports:
+  dind: #
+    image: docker:dind # use the official Docker image
+    privileged: true # run in privileged mode
+    restart: always # restart the container if it stops
+    networks: # connect to the docker network
+      docker: # use the docker network
+        aliases:  # set the alias to docker
+          - docker 
+    ports: # expose port 2376
       - 2376:2376
-    tty: true
-    volumes:
-      - jenkins-data:/var/jenkins_home
-      - jenkins-docker-certs:/certs/client
-      - $HOME:/home
+    tty: true # true keeps the container running and allocates a TTY for interaction.
+    volumes: # mount these volumes
+      - jenkins-data:/var/jenkins_home # mount the jenkins-data volume to /var/jenkins_home
+      - jenkins-docker-certs:/certs/client # mount the jenkins-docker-certs volume to /certs/client
+      - $HOME:/home # mount the home directory to /home
     environment:
-      - DOCKER_TLS_CERTDIR=/certs
+      - DOCKER_TLS_CERTDIR=/certs # set the DOCKER_TLS_CERTDIR environment variable to /certs
