@@ -44,30 +44,29 @@ or see in docker logs jenkins / console output
 ## Jenkins
 - Image: jenkins/jenkins:lts-jdk11
 - Ports:
-8080: Jenkins web interface
-50000: Jenkins agent communication
+  - 8080: Jenkins web interface
+  - 50000: Jenkins agent communication
 - Volumes:
-- ./jenkins:/var/jenkins_home: Persists Jenkins data.
-- /usr/bin/docker:/usr/bin/docker: Provides access to the Docker binary.
-- /var/run/docker.sock:/var/run/docker.sock: Allows Jenkins to communicate with the Docker daemon.
-- $HOME:/home: Mounts the home directory.
+  - ./jenkins:/var/jenkins_home: Persists Jenkins data.
+  - /usr/bin/docker:/usr/bin/docker: Provides access to the Docker binary.
+  - /var/run/docker.sock:/var/run/docker.sock: Allows Jenkins to communicate with the Docker daemon.
+  - $HOME:/home: Mounts the home directory.
 ## Docker-in-Docker (DinD)
 - Image: docker:dind
 - Ports:
-2376: Exposes Docker daemon for TLS communication.
+  - 2376: Exposes Docker daemon for TLS communication.
 - Environment:
-- DOCKER_TLS_CERTDIR=/certs: Configures the directory for TLS certificates.
+  - DOCKER_TLS_CERTDIR=/certs: Configures the directory for TLS certificates.
 - Volumes:
-jenkins-data:/var/jenkins_home: Shares data between Jenkins and DinD.
-jenkins-docker-certs:/certs/client: Stores Docker TLS certificates.
+  - jenkins-data:/var/jenkins_home: Shares data between Jenkins and DinD.
+  - jenkins-docker-certs:/certs/client: Stores Docker TLS certificates.
 - Networking
 Both Jenkins and DinD services are connected to a user-defined Docker network called docker. This network enables communication between the services.
 
-Volumes
-Two named volumes are created for persistent data storage:
+## Volumes
+- Two named volumes are created for persistent data storage:
+  - jenkins-data: Stores Jenkins home directory data.
+  - jenkins-docker-certs: Stores TLS certificates for Docker-in-Docker.
 
-jenkins-data: Stores Jenkins home directory data.
-jenkins-docker-certs: Stores TLS certificates for Docker-in-Docker.
-
-#License
+# License
 This project is licensed under the MIT License. See the LICENSE file for details.
