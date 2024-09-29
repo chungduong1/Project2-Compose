@@ -42,8 +42,8 @@ or see in docker logs jenkins / console output
 
 # Services
 ## Jenkins
--Image: jenkins/jenkins:lts-jdk11
--Ports:
+[Image: jenkins/jenkins:lts-jdk11
+[Ports:
 -8080: Jenkins web interface
 -50000: Jenkins agent communication
 -Volumes:
